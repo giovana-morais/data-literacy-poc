@@ -52,7 +52,7 @@ if "messages" not in st.session_state:
     you chose related to your main thesis?'
     # send instructions to agent
     st.session_state["messages"] = [
-        {"role": "system", "content": bp.SYSTEM_INSTRUCTIONS}
+        {"role": "system", "content": bp.EVIDENCE_SELECTOR_SYSTEM_INSTRUCTIONS}
     ]
 
     # provide topic and thesis as context to the agent
