@@ -19,7 +19,7 @@ st.markdown("## Choose one image from the list below")
 
 # define our two columns and make sure image_list is 2x the size of
 # image_selection
-image_list, image_selection = st.columns((2,1), gap="large")
+image_list, image_selection = st.columns((2,2), gap="large")
 
 with image_list:
     img_container = image_list.container(height=1000)
@@ -35,13 +35,16 @@ with image_list:
             evidence_images,
             titles=[f"{os.path.basename(i)}" for i in evidence_paths],
             # div_style={"display": "flex", "flex-wrap": "wrap"},
-            # img_style={"heigth": "100px"},
+            img_style={"width": "200px"},
         )
 
 with image_selection:
     if clicked > -1:
         st.image(evidence_images[clicked],
-                caption=f"{os.path.basename(evidence_paths[clicked])}")
+                caption=f"{os.path.basename(evidence_paths[clicked])}",
+                use_column_width="never",
+                width=600
+        )
         st.link_button(
             url=f"./chatbot?img_index={clicked}",
             label="Discuss this image",
