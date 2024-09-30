@@ -46,20 +46,6 @@ for uploaded_file in uploaded_files:
 
 st.chat_message("assistant").write("Input files processed. How can I help you with your story?")
 
-# load img_index selected from previous page
-# img_index = int(st.query_params.get("img_index", None))
-# chosen_evidence = evidence_images[img_index]
-# st.image(chosen_evidence)
-
-# # provide selected image as context
-# content = []
-# content.append({
-#     "type": "image_url",
-#     "image_url": {
-#         "url": f"{chosen_evidence}"
-#         }
-#     })
-
 # # display message history, but
 # # skip messages that were only providing context to the agent
 for idx, msg in enumerate(st.session_state.messages):
