@@ -27,6 +27,7 @@ for file in evidence_paths:
 
 # load img_index selected from previous page
 img_index = int(st.query_params.get("img_index", None))
+thesis = st.query_params.get("thesis", None)
 chosen_evidence = evidence_images[img_index]
 # st.image(chosen_evidence)
 
@@ -57,15 +58,11 @@ with buttons:
 with chatbot:
     main_topic = "Social media usage by teenagers"
     st.image(chosen_evidence)
-    # main_thesis = st.text_input(
-    #         "What are your initial thoughts on this image?"
-    # )
-    main_thesis = "I believe that teenagers should not use social media because it can polarize their views and they would lose their sense of nuance when discussing complex issues"
 
     if "messages" not in st.session_state:
         welcome_message = f'You need to build an argument about \
         "{main_topic}" \
-        and your starting point of view is "{main_thesis}". How do you think the image \
+        and your starting point of view is "{thesis}". How do you think the image \
         you chose related to your main thesis?'
         # send instructions to agent
         st.session_state["messages"] = [
@@ -75,7 +72,7 @@ with chatbot:
         # provide topic and thesis as context to the agent
         st.session_state.messages.append({
             "role": "user",
-            "content": f"We're discussing {main_topic} and my main thesis is \"{main_thesis}\""})
+            "content": f"We're discussing {main_topic} and my main thesis is \"{thesis}\""})
         st.chat_message("assistant").write(welcome_message)
 
 
