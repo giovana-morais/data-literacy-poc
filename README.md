@@ -1,4 +1,8 @@
-# Webapp POC
+# Data Literacy POC
+
+this is a proof-of-concept to validate the overall workflow of the data remix
+application. the data-remix project aims to use LLMs to help students to create
+argumentative short videos.
 
 # installation
 ```bash
