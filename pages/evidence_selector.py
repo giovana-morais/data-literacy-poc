@@ -13,7 +13,6 @@ st.set_page_config(
 )
 st.sidebar.header("Evidence Selector")
 
-
 st.markdown("# Evidence Selector")
 
 st.markdown("### What is your thesis?")
@@ -22,6 +21,7 @@ main_topic = "Social media usage by teenagers"
 
 if thesis != "":
     st.markdown("## Choose one image from the list below")
+
     # define our two columns and make sure image_list is 2x the size of
     # image_selection
     image_list, image_selection = st.columns((2,2), gap="large")
@@ -40,7 +40,7 @@ if thesis != "":
                 evidence_images,
                 titles=[f"{os.path.basename(i)}" for i in evidence_paths],
                 # div_style={"display": "flex", "flex-wrap": "wrap"},
-                img_style={"width": "200px"},
+                img_style={"width": "300px"},
             )
 
     with image_selection:
