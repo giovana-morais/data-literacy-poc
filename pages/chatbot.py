@@ -80,7 +80,7 @@ with st.sidebar:
 
 
 
-main_topic = "Social media usage by teenagers"
+main_topic = "What responsibility should parents have in regulating their kids social media use?"
 st.image(chosen_evidence)
 
 if "messages" not in st.session_state:

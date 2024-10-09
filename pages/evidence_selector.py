@@ -17,10 +17,10 @@ st.markdown("# Evidence Selector")
 
 st.markdown("### What is your thesis?")
 thesis = st.text_input(label="Thesis", placeholder="Example: I believe that parents should not allow teenagers to use social media because it is hurtful to their studies.")
-main_topic = "Social media usage by teenagers"
 
 if thesis != "":
-    st.markdown("## Choose one image from the list below")
+    st.markdown("## Click on an image miniatures to see if bigger")
+    st.markdown("### Once you're happy with your choice, click on the \"Discuss Image\" button to open a new tab with the AI agent")
 
     # define our two columns and make sure image_list is 2x the size of
     # image_selection
@@ -39,19 +39,20 @@ if thesis != "":
             clicked = clickable_images(
                 evidence_images,
                 titles=[f"{os.path.basename(i)}" for i in evidence_paths],
-                # div_style={"display": "flex", "flex-wrap": "wrap"},
+                div_style={"display": "flex", "flex-wrap": "wrap"},
+                # img_style={"width": "300px"},
                 img_style={"width": "300px"},
             )
 
     with image_selection:
         if clicked > -1:
-            st.image(evidence_images[clicked],
-                    caption=f"{os.path.basename(evidence_paths[clicked])}",
-                    use_column_width="never",
-                    width=600
-            )
             st.link_button(
                 url=f"./chatbot?img_index={clicked}&thesis={thesis}",
                 label="Discuss this image",
                 use_container_width=True
+            )
+            st.image(evidence_images[clicked],
+                    caption=f"{os.path.basename(evidence_paths[clicked])}",
+                    use_column_width="never",
+                    width=600
             )
