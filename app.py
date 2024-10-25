@@ -10,7 +10,9 @@ st.set_page_config(
 st.markdown("# Welcome to the Data Remix prototype!")
 
 st.markdown("""
-There are two main functionalities we would like to test here:
+There are three main functionalities we would like to test here:
+
+* Thesis Assessment: this tool aims to help the student come up with a stronger thesis based on their experience with the discussion topic.
 
 * Evidence Selector: this tool helps the student discuss evidences with one agent and gather insights from it. The student *must* have a thesis to work on. Once the discussion is done, the student has the option to save it.
 
@@ -33,10 +35,10 @@ st.session_state.plot_helper = plot_helper
 st.session_state.argumentation_helper = argumentation_helper
 
 if plot_helper:
-    st.write("Feature activated!")
+    st.write("We will help you analyze plots!")
 
 if argumentation_helper:
-    st.write("Ok, we will provide help on building your arguments")
+    st.write("We will help you build your arguments!")
 
 
 td = st.button("Assess thesis quality")
