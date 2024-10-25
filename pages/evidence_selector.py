@@ -15,6 +15,8 @@ st.sidebar.header("Evidence Selector")
 
 st.markdown("# Evidence Selector")
 
+back = st.button("<< Go back")
+
 st.markdown("### What is your thesis?")
 thesis = st.text_input(label="Thesis", placeholder="Example: I believe that parents should not allow teenagers to use social media because it is hurtful to their studies.")
 
@@ -45,9 +47,12 @@ if thesis != "":
             )
 
     with image_selection:
+        plot_helper = st.session_state.get("plot_helper", False)
+        argumentation_helper = st.session_state.get("argumentation_helper", False)
+
         if clicked > -1:
             st.link_button(
-                url=f"./chatbot?img_index={clicked}&thesis={thesis}",
+                url=f"./chatbot?img_index={clicked}&thesis={thesis}&plot_helper={plot_helper}&argumentation_helper={argumentation_helper}",
                 label="Discuss this image",
                 use_container_width=True
             )
@@ -56,3 +61,6 @@ if thesis != "":
                     use_column_width="never",
                     width=600
             )
+
+if back:
+    st.switch_page("app.py")
