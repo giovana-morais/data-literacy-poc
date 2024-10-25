@@ -10,7 +10,7 @@ import base_prompts as bp
 
 st.set_page_config(
     page_title="Chatbot",
-    page_icon=":robot:",
+    page_icon=":robot_face:",
     layout="wide",
     # initial_sidebar_state="collapsed",
     )
@@ -27,8 +27,23 @@ for file in evidence_paths:
 # load img_index selected from previous page
 img_index = int(st.query_params.get("img_index", None))
 thesis = st.query_params.get("thesis", None)
+plot_helper = st.query_params.get("plot_helper", False)
+argumentation_helper = st.query_params.get("argumentation_helper", False)
+
+st.markdown(f"plot helper: {plot_helper}")
+st.markdown(f"argumentation helper: {argumentation_helper}")
+
+if argumentation_helper:
+    SYSTEM_INSTRUCTIONS = bp.EVIDENCE_SELECTOR_SYSTEM_INSTRUCTIONS_SPECIFIC
+else:
+    SYSTEM_INSTRUCTIONS = bp.EVIDENCE_SELECTOR_SYSTEM_INSTRUCTIONS
+
+if plot_helper:
+    IMAGE_PROMPT = bp.IMAGE_PROMPT_SPECIFIC
+else:
+    IMAGE_PROMPT = bp.IMAGE_PROMPT
+
 chosen_evidence = evidence_images[img_index]
-# st.image(chosen_evidence)
 
 client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
 
@@ -49,10 +64,10 @@ with st.sidebar:
     # download file
     if save_evidence:
         st.write("Preparing summary...")
-        # ask the chat to create a summary of the conversation
-        prompt = "Create a two-paragraph summary of the conversation highlighting how the evidence is related to my argument and how that evolved during the conversation. Help me understand my position on the topic given the discussion. Keep language simple."
 
-        st.session_state.messages.append({"role": "user", "content": prompt})
+        st.session_state.messages.append(
+                {"role": "user", "content": bp.SAVE_EVIDENCE_PROMPT}
+        )
 
         response = client.chat.completions.create(model="gpt-4o-mini", messages=st.session_state.messages[1::])
         summary = response.choices[0].message.content
@@ -94,7 +109,7 @@ if "messages" not in st.session_state:
 
     # send instructions to agent
     st.session_state["messages"].append({
-        "role": "system", "content": bp.EVIDENCE_SELECTOR_SYSTEM_INSTRUCTIONS
+        "role": "system", "content": SYSTEM_INSTRUCTIONS
     })
 
     # provide topic and thesis as context to the agent
@@ -106,16 +121,16 @@ if "messages" not in st.session_state:
     # provide image as a context to the agent
     st.session_state.messages.append(
         {"role": "user", "content": [
-            {"type": "text", "text": bp.IMAGE_PROMPT_TEST},
+            {"type": "text", "text": IMAGE_PROMPT},
             {"type": "image_url", "image_url": {
                 "url": f"{chosen_evidence}" },
             }
         ]}
     )
 
-    # display message history
-    # skip messages that were only providing context to the agent,
-    # display everything else
+# display message history
+# skip messages that were only providing context to the agent,
+# display everything else
 for msg in st.session_state.messages[3:]:
     st.chat_message(msg["role"]).write(msg["content"])
 
