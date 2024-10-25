@@ -7,11 +7,6 @@ st.set_page_config(
     initial_sidebar_state="collapsed",
 )
 
-@st.dialog("...")
-def tmp():
-    st.write("..")
-
-
 st.markdown("# Welcome to the Data Remix prototype!")
 
 st.markdown("""
